@@ -36,7 +36,7 @@ app.set('trust proxy', 1);
 // middleware
 app.use(express.json())
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', // Set to your frontend URL in production
+  origin: *, 
   credentials: true
 }))
 
