@@ -36,7 +36,7 @@ app.set('trust proxy', 1);
 // middleware
 app.use(express.json())
 app.use(cors({
-  origin: "*",
+  origin: "https://mamas-food.vercel.app",
   credentials: true
 }))
 
