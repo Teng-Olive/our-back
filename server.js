@@ -10,7 +10,7 @@ import productRouter from './routes/productRoute.js'
 import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
 
-// Models (ensure they are registered)
+// Models (keep for initialization)
 import User from './models/User.js'
 import Product from './models/Product.js'
 import OrderModel from './models/OrderModel.js'
@@ -21,24 +21,28 @@ const port = process.env.PORT || 4000
 // ========================
 // ENV VALIDATION (FIXED)
 // ========================
-
-// If you're using MongoDB (MOST LIKELY FOR MERN)
-const requiredEnvs = ['MONGO_URI', 'JWT_SECRET']
+const requiredEnvs = [
+  'DB_HOST',
+  'DB_USER',
+  'DB_NAME',
+  'DB_PASSWORD',
+  'JWT_SECRET'
+]
 
 const missingRequired = requiredEnvs.filter((k) => !process.env[k])
 
 if (missingRequired.length > 0) {
   console.error(
-    `Missing required environment variable(s): ${missingRequired.join(', ')}`
+    `❌ Missing required environment variable(s): ${missingRequired.join(', ')}`
   )
-  console.error('Please set them in Render environment variables.')
+  console.error('👉 Please add them in your Render Environment Variables')
   process.exit(1)
 }
 
-// Optional warning
+// Optional Stripe warning
 if (!process.env.STRIPE_SECRET_KEY) {
   console.warn(
-    'Warning: STRIPE_SECRET_KEY is not set. Stripe payments will be disabled.'
+    '⚠️ STRIPE_SECRET_KEY is not set. Payments will be disabled.'
   )
 }
 
@@ -56,12 +60,12 @@ app.use(express.json())
 app.use(
   cors({
     origin: 'https://mamas-food.vercel.app',
-    credentials: true,
+    credentials: true
   })
 )
 
 // ========================
-// ROUTES
+// API ROUTES
 // ========================
 app.use('/api/user', userRouter)
 app.use('/api/product', productRouter)
@@ -78,6 +82,6 @@ app.get('/', (req, res) => {
 // ========================
 // START SERVER
 // ========================
-app.listen(port, '0.0.0.0', () =>
-  console.log(`Server started on port: ${port}`)
-)
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Server started on port: ${port}`)
+})
